@@ -88,7 +88,7 @@ grub_cmd_dd (grub_extcmd_context_t ctxt, int argc, char **args)
   if (argc < 2)
     return grub_error (GRUB_ERR_BAD_ARGUMENT, "device name required");
 
-  file = grub_file_open (args[0]);
+  file = grub_file_open (args[0], GRUB_FILE_TYPE_DD);
   if (! file)
     return grub_errno;
 
@@ -107,7 +107,7 @@ grub_cmd_dd (grub_extcmd_context_t ctxt, int argc, char **args)
       return grub_errno;
     }
 
-  dstSize = grub_disk_get_size (disk) << GRUB_DISK_SECTOR_BITS;
+  dstSize = grub_disk_native_sectors (disk) << GRUB_DISK_SECTOR_BITS;
 
   for (;;)
   {
